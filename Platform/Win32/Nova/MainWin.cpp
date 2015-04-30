@@ -46,9 +46,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 		return -1;
 
 	// Set up my stuff.
-	mesh = CreateMeshFromFile("models/bunny-5000.obj");
+	mesh = CreateMeshFromFile("../../../models/bunny-5000.obj");
 	if (!mesh)
-		MessageBox(NULL, L"ERROR", L"ERROR", MB_OK);
+		MessageBox(NULL, L"ERROR", L"Unable to load mesh file!", MB_OK);
 	draw_line = draw_line_D2D;
 	MatSetTranslate(&pos, 0.0f, -0.1f, -0.3f);
 

@@ -83,6 +83,8 @@ struct Mesh *CreateMeshFromFile(char *file_name)
 				n_buffer[n_count - 1].z = z;
 				n_buffer[n_count - 1].w = 0.0f;
 
+				VecNormalize(&n_buffer[n_count - 1], &n_buffer[n_count - 1]);
+
 				break;
 			}
 
