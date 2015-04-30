@@ -47,6 +47,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 
 	// Set up my stuff.
 	mesh = CreateMeshFromFile("models/bunny-5000.obj");
+	if (!mesh)
+		MessageBox(NULL, L"ERROR", L"ERROR", MB_OK);
 	draw_line = draw_line_D2D;
 	MatSetTranslate(&pos, 0.0f, -0.1f, -0.3f);
 
@@ -159,6 +161,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pRenderTarget->BeginDraw();
 
 		clear_pixel_buffer();
+		clear_depth_buffer();
+
 		if (mesh != NULL)
 			RenderMesh(mesh, &pos);
 

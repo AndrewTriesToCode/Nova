@@ -114,7 +114,7 @@ void MatSetPerspective(struct Matrix *m, float hFov, float vFov, float n, float 
 
 	m->e[0][0] = n / r;	m->e[0][1] = 0.0f;  m->e[0][2] = 0.0f;          m->e[0][3] = 0.0f;
 	m->e[1][0] = 0.0f;	m->e[1][1] = n / t; m->e[1][2] = 0.0f;          m->e[1][3] = 0.0f;
-	m->e[2][0] = 0.0f;	m->e[2][1] = 0.0f;	m->e[2][2] = -f / (f - n);  m->e[2][3] = -(f * n) / (f - n);
+	m->e[2][0] = 0.0f;	m->e[2][1] = 0.0f;	m->e[2][2] = 1 / (f - n);   m->e[2][3] = -n / (f - n);
 	m->e[3][0] = 0.0f;	m->e[3][1] = 0.0f;	m->e[3][2] = -1.0f;         m->e[3][3] = 0.0f;
 }
 

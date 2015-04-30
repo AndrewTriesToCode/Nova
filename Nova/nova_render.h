@@ -14,8 +14,10 @@ void set_screen_size(int width, int height);
 void set_fov(float fov);
 uint32_t *get_pixel_buffer();
 void clear_pixel_buffer();
+void clear_depth_buffer();
 extern void(*draw_line)(float x0, float y0, float x1, float y1);
 void set_pixel(unsigned int x, unsigned int y, uint32_t rgba);
+void set_depth(unsigned int x, unsigned int y, uint32_t z);
 uint32_t RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat);
 
