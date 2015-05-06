@@ -6,6 +6,6 @@ Thumbs.db
 */Win32/**/Debug/
 */Win32/**/Release/
 */Win32/Nova/*.user
-*/Win32/*.suo
+*/Win32/**/*.suo
 */Win32/*.sdf
 */Win32/*.opensdf
