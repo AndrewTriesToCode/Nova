@@ -38,11 +38,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 		return -1;
 
 	// Set up my stuff.
-	mesh = CreateMeshFromFile("../../../models/bunny-1500.obj");
+	mesh = CreateMeshFromFile("../../../models/bunny-5000.obj");
 	if (!mesh)
 		MessageBox(NULL, L"ERROR", L"Unable to load mesh file!", MB_OK);
 
-	MatSetTranslate(&pos, 0.0f, -0.1f, -0.3f);
+	
 
 	// Run the message loop.
 	MSG msg = { 0 };
@@ -57,6 +57,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		static float ang = 0.0f;
+		//ang += 0.0025f;
+		Matrix rot, trans;
+		MatSetRotY(&rot, ang);
+		MatSetTranslate(&trans, 0.0f, -0.1f, -0.35f);
+		MatMul(&trans, &rot, &pos);
 
 		InvalidateRect(hWnd, NULL, FALSE);
 
