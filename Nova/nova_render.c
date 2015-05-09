@@ -28,7 +28,7 @@ void set_screen_size(int width, int height)
 
 	if (depth_buffer != NULL)
 		free(depth_buffer);
-	depth_buffer = (uint32_t *)malloc(screen_width * screen_height * sizeof(uint32_t));
+	depth_buffer = (uint32_t *)malloc(screen_width * screen_height * sizeof(float));
 
 	MatSetIdentity(&screen_mat);
 	screen_mat.e[0][0] = width / 2.0f;
@@ -95,7 +95,7 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 			&mesh->normals[mesh->tris[i].n2],
 			&n);
 
-		if (VecDot3(&cull_vec, &n) < 0)
+		if (1 || VecDot3(&cull_vec, &n) < 0)
 		{
 			struct Vector light_vec = { -0.5f, 0.0f, -1.0f };
 			VecNormalize(&light_vec, &light_vec);
@@ -106,14 +106,14 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 			//uint8_t color = (uint8_t)max(64.0f, light * 255.0f + 0.5f);
 
 			struct Vector n = mesh->normals[mesh->tris[i].n0];
-			v0.light = max(0.05f, -VecDot3(&n, &light_vec));
-			
+			v0.light = max(0.25f, -VecDot3(&n, &light_vec));
+
 			n = mesh->normals[mesh->tris[i].n1];
-			v1.light = max(0.05f, -VecDot3(&n, &light_vec));
-			
+			v1.light = max(0.25f, -VecDot3(&n, &light_vec));
+
 			n = mesh->normals[mesh->tris[i].n2];
-			v2.light = max(0.05f, -VecDot3(&n, &light_vec));
-			
+			v2.light = max(0.25f, -VecDot3(&n, &light_vec));
+
 			MatVecMul(&render_mat, &verts[tris[i].v0].pos, &v0.pos);
 			MatVecMul(&render_mat, &verts[tris[i].v1].pos, &v1.pos);
 			MatVecMul(&render_mat, &verts[tris[i].v2].pos, &v2.pos);
@@ -165,10 +165,9 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 			float long_dlight = (top->light - bot->light) / (top->pos.y - bot->pos.y);
 			float short_dlight = (top->light - mid->light) / (top->pos.y - mid->pos.y);
 
-			int y_start = (int)(top->pos.y + 0.5f);
-			int y_mid = (int)(mid->pos.y);
-			int y_end = (int)(bot->pos.y);
-			
+			int y_start = (int)top->pos.y + 1;
+			int y_end = (int)mid->pos.y;
+
 			float xd_start;
 			float xd_end;
 
@@ -217,10 +216,10 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 			float light_start = top->light + (y_start - top->pos.y) * lightd_start;
 			float light_end = top->light + (y_start - top->pos.y) * lightd_end;
 			float light, lightd;
-			
+
 			int x, y;
 
-			for (y = y_start; y <= y_mid; y++)
+			for (y = y_start; y <= y_end; y++)
 			{
 				int_x_start = (int)x_start + 1;
 				int_x_end = (int)x_end;
@@ -250,47 +249,41 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 				light_end += lightd_end;
 			}
 
+			y_start = (int)mid->pos.y + 1;
+			y_end = (int)bot->pos.y;
+
 			short_dx = (mid->pos.x - bot->pos.x) / (mid->pos.y - bot->pos.y);
 			short_zid = (1.0f / mid->pos.z - 1.0f / bot->pos.z) / (mid->pos.y - bot->pos.y);
 			short_dlight = (mid->light - bot->light) / (mid->pos.y - bot->pos.y);
-			
+
 			if (short_dx < long_dx)
 			{
 				// Long side of the lower triangle is on the left.
 
-				xd_start = -long_dx;
-				xd_end = -short_dx;
+				xd_end = short_dx;
+				x_end = mid->pos.x + (y_start - mid->pos.y) * xd_start;
 
-				zid_start = -long_zid;
-				zid_end = -short_zid;
+				zid_end = short_zid;
+				zi_end = 1.0f / mid->pos.z + (y_start - mid->pos.y) * zid_end;
 
-				lightd_start = -long_dlight;
-				lightd_end = -short_dlight;
+				lightd_end = short_dlight;
+				light_end = mid->light + (y_start - mid->pos.y) * lightd_end;
 			}
 			else
 			{
 				// Long side of the lower triangle is on the right.
 
-				xd_start = -short_dx;
-				xd_end = -long_dx;
+				xd_start = short_dx;
+				x_start = mid->pos.x + (y_start - mid->pos.y) * xd_start;
 
-				zid_start = -short_zid;
-				zid_end = -long_zid;
+				zid_start = short_zid;
+				zi_start = 1.0f / mid->pos.z + (y_start - mid->pos.y) * zid_start;
 
-				lightd_start = -short_dlight;
-				lightd_end = -long_dlight;
+				lightd_start = short_dlight;
+				light_start = mid->light + (y_start - mid->pos.y) * lightd_start;
 			}
 
-			x_start = bot->pos.x + (bot->pos.y - y_end) * xd_start;
-			x_end = bot->pos.x + (bot->pos.y - y_end) * xd_end;
-
-			zi_start = 1.0f / bot->pos.z + (bot->pos.y - y_end) * zid_start;
-			zi_end = 1.0f / bot->pos.z + (bot->pos.y - y_end) * zid_end;
-
-			light_start = bot->light + (bot->pos.y - y_end) * lightd_start;
-			light_end = bot->light + (bot->pos.y - y_end) * lightd_end;
-
-			for (y = y_end; y > y_mid; y--)
+			for (y = y_start; y <= y_end; y++)
 			{
 				int_x_start = (int)x_start + 1;
 				int_x_end = (int)x_end;
@@ -304,7 +297,7 @@ void RenderMesh(const struct Mesh *mesh, const struct Matrix *mat)
 				for (x = int_x_start; x <= int_x_end; x++)
 				{
 					if (set_depth_if_zgt(x, y, 1.0f / zi))
-						set_pixel(x, y, RGBA(light * 255, light * 255, light * 255, 255));
+						set_pixel(x, y, RGBA(0 * 255, light * 255, 0 * 255, 255));
 
 					zi += zid;
 					light += lightd;
