@@ -12,20 +12,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 ID2D1Factory *pFactory = NULL;
 ID2D1HwndRenderTarget *pRenderTarget = NULL;
 ID2D1Bitmap *bm = NULL;
-ID2D1SolidColorBrush *pBrush = NULL;
 HRESULT CreateD2D(HWND hWnd);
 void DestroyD2D();
 
 // My vars.
 Mesh *mesh;
 Matrix pos, persp;
-
-void draw_line_D2D(float x0, float y0, float x1, float y1)
-{
-	D2D1_POINT_2F p0 = { x0, y0 };
-	D2D1_POINT_2F p1 = { x1, y1 };
-	pRenderTarget->DrawLine(p0, p1, pBrush);
-}
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdShow)
 {
@@ -46,10 +38,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 		return -1;
 
 	// Set up my stuff.
-	mesh = CreateMeshFromFile("../../../models/bunny-5000.obj");
+	mesh = CreateMeshFromFile("../../../models/bunny-1500.obj");
 	if (!mesh)
 		MessageBox(NULL, L"ERROR", L"Unable to load mesh file!", MB_OK);
-	draw_line = draw_line_D2D;
+
 	MatSetTranslate(&pos, 0.0f, -0.1f, -0.3f);
 
 	// Run the message loop.
@@ -84,6 +76,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 		pFactory->Release();
 		pFactory = NULL;
 	}
+
 	DestroyD2D();
 	DestroyMesh(mesh);
 
@@ -105,8 +98,9 @@ HRESULT CreateD2D(HWND hWnd)
 
 		if (SUCCEEDED(hr))
 		{
-			const D2D1_COLOR_F color = D2D1::ColorF(0.0f, 0.0f, 0.0f);
-			hr = pRenderTarget->CreateSolidColorBrush(color, &pBrush);
+			D2D1_PIXEL_FORMAT pf = pRenderTarget->GetPixelFormat();
+			D2D1_BITMAP_PROPERTIES bmp = D2D1::BitmapProperties(pf);
+			hr = pRenderTarget->CreateBitmap(pRenderTarget->GetPixelSize(), bmp, &bm);
 		}
 	}
 
@@ -115,15 +109,15 @@ HRESULT CreateD2D(HWND hWnd)
 
 void DestroyD2D()
 {
-	if (pRenderTarget)
+	if (pRenderTarget != NULL)
 	{
 		pRenderTarget->Release();
 		pRenderTarget = NULL;
 	}
-	if (pBrush)
+	if (bm != NULL)
 	{
-		pBrush->Release();
-		pBrush = NULL;
+		bm->Release();
+		bm = NULL;
 	}
 }
 
@@ -174,7 +168,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pRenderTarget->DrawBitmap(bm);
 
 		hr = pRenderTarget->EndDraw();
-		if (FAILED(hr) || hr == D2DERR_RECREATE_TARGET)
+		if (hr == D2DERR_RECREATE_TARGET)
 			DestroyD2D();
 
 		EndPaint(hWnd, &ps);
@@ -185,12 +179,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		RECT rc;
 		GetClientRect(hWnd, &rc);
 
-		if (pRenderTarget)
-		{
-			D2D1_SIZE_U size = D2D1::SizeU(rc.right, rc.bottom);
-			pRenderTarget->Resize(size);
-			InvalidateRect(hWnd, NULL, FALSE);
-		}
+		DestroyD2D();
 
 		set_screen_size(rc.right, rc.bottom);
 		set_fov(60.0f);
