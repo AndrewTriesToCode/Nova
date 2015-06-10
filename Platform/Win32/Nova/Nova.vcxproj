@@ -22,12 +22,13 @@
     <ClCompile Include="..\..\..\Nova\nova_geometry.c" />
     <ClCompile Include="..\..\..\Nova\nova_math.c" />
     <ClCompile Include="..\..\..\Nova\nova_render.c" />
+    <ClCompile Include="..\..\..\Nova\nova_utility.c" />
+    <ClCompile Include="..\..\..\Nova\nova_utility.h" />
     <ClCompile Include="MainWin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Nova\nova_geometry.h" />
     <ClInclude Include="..\..\..\Nova\nova_math.h" />
-    <ClInclude Include="..\..\..\Nova\nova_render.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C8256681-7E7B-47E9-BFD8-2032CA450E33}</ProjectGuid>

@@ -5,6 +5,7 @@
 
 #include "../../../Nova/nova_geometry.h"
 #include "../../../Nova/nova_render.h"
+#include "../../../Nova/nova_utility.h"
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -17,10 +18,13 @@ void DestroyD2D();
 
 // My vars.
 Mesh *mesh;
+TextureMap *texture;
 Matrix pos, persp;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdShow)
 {
+	SetProcessDPIAware();
+
 	// Register the window class.
 	WNDCLASS wc = { 0 };
 	wc.lpfnWndProc = WindowProc;
@@ -29,7 +33,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	RegisterClass(&wc);
 
 	// Create the window.
-	HWND hWnd = CreateWindowEx(0, wc.lpszClassName, L"Nova", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 600, 600, NULL, NULL, hInstance, NULL);
+	HWND hWnd = CreateWindowEx(0, wc.lpszClassName, L"Nova", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1500, 1500, NULL, NULL, hInstance, NULL);
 	if (hWnd == NULL)
 		return -1;
 	ShowWindow(hWnd, nCmdShow);
@@ -38,13 +42,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 		return -1;
 
 	// Set up my stuff.
-	mesh = CreateMeshFromFile("../../../models/bunny-5000.obj");
+	mesh = CreateMeshFromFile("../../../models/f16/f16.obj");
 	if (!mesh)
-		MessageBox(NULL, L"ERROR", L"Unable to load mesh file!", MB_OK);
+		MessageBox(NULL, L"Unable to load mesh file!", L"ERROR", MB_OK);
+	mesh->texture_map = CreateTextureMapFromFile("../../../models/f16/f16s.bmp");
 
-	
-
-	// Run the message loop.
+	// Run the message loo0
 	MSG msg = { 0 };
 	DWORD start = GetTickCount();
 	DWORD now;
@@ -52,18 +55,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	wchar_t d[20];
 	while (msg.message != WM_QUIT)
 	{
-		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
 		static float ang = 0.0f;
-		//ang += 0.0025f;
-		Matrix rot, trans;
+		
+		Matrix rot, rot2, trans, pos1;
+
 		MatSetRotY(&rot, ang);
-		MatSetTranslate(&trans, 0.0f, -0.1f, -0.35f);
-		MatMul(&trans, &rot, &pos);
+		MatSetRotX(&rot2, ang / 1.5f);
+		ang -= 0.002f;
+		MatSetTranslate(&trans, 0.0f, 0.0f, -3.0f);
+		MatMul(&rot2, &rot, &pos1);
+		MatMul(&trans, &pos1, &pos);
 
 		InvalidateRect(hWnd, NULL, FALSE);
 
@@ -75,6 +76,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 			_itow_s(frame / 2, d, 20, 10);
 			SetWindowText(hWnd, d);
 			frame = 0;
+		}
+
+		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 	}
 
@@ -146,10 +153,10 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (pRenderTarget == NULL)
 		{
 			CreateD2D(hWnd);
-			
+
 			D2D1_PIXEL_FORMAT pf = pRenderTarget->GetPixelFormat();
 			float dpix, dpiy;
-			pRenderTarget->GetDpi(&dpix, &dpiy);
+			pFactory->GetDesktopDpi(&dpix, &dpiy);
 			D2D1_BITMAP_PROPERTIES bmp = D2D1::BitmapProperties(pf, dpix, dpiy);
 			RECT rc;
 			GetClientRect(hWnd, &rc);
@@ -165,13 +172,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		clear_depth_buffer();
 
 		if (mesh != NULL)
-			RenderMesh(mesh, &pos);
+			render_mesh(mesh, &pos);
 
 		RECT rc;
 		GetClientRect(hWnd, &rc);
 		D2D1_RECT_U rect = D2D1::RectU(0, 0, rc.right, rc.bottom);
 		uint32_t *src = get_pixel_buffer();
-		HRESULT hr = bm->CopyFromMemory(NULL, src, rc.right * sizeof(uint32_t));
+		//texture = mesh->texture_map;
+		//for (int i = 0; i < rc.bottom && i < texture->height; i++)
+		//	memcpy(src + i * rc.right, texture->buffer + i * texture->width, sizeof(uint32_t) * texture->width);
+		HRESULT hr = bm->CopyFromMemory(NULL, src, rc.right * BYTES_PER_PIXEL);
 		pRenderTarget->DrawBitmap(bm);
 
 		hr = pRenderTarget->EndDraw();
@@ -189,7 +199,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DestroyD2D();
 
 		set_screen_size(rc.right, rc.bottom);
-		set_fov(60.0f);
+		set_hfov(60.0f);
 
 		return 0;
 	}

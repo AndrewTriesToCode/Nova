@@ -63,7 +63,7 @@ void VecCross3(const struct Vector *v1, const struct Vector *v2, struct Vector *
 {
 	r->x = v1->y * v2->z - v1->z * v2->y;
 	r->y = v1->z * v2->x - v1->x * v2->z;
-	r->z = v1->x * v2->y - v1->y * v2->z;
+	r->z = v1->x * v2->y - v1->y * v2->x;
 	r->w = 0.0f;
 }
 
