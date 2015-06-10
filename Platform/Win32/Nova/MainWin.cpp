@@ -3,7 +3,6 @@
 #include <d2d1.h>
 #pragma comment(lib, "d2d1")
 
-#include "../../../Nova/nova_geometry.h"
 #include "../../../Nova/nova_render.h"
 #include "../../../Nova/nova_utility.h"
 

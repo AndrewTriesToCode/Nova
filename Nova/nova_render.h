@@ -8,7 +8,6 @@ extern "C" {
 #include <inttypes.h>
 
 #include "nova_math.h"
-#include "nova_geometry.h"
 
 #define BYTES_PER_PIXEL sizeof(uint32_t)
 
