@@ -96,7 +96,7 @@ void MatSetRotY(struct Matrix *m, float a)
 	m->e[0][0] = cosf(a);   m->e[0][1] = 0.0f;	m->e[0][2] = sinf(a);	m->e[0][3] = 0.0f;
 	m->e[1][0] = 0.0f;      m->e[1][1] = 1.0f;	m->e[1][2] = 0.0f;		m->e[1][3] = 0.0f;
 	m->e[2][0] = -sinf(a);	m->e[2][1] = 0.0f;	m->e[2][2] = cosf(a);	m->e[2][3] = 0.0f;
-	m->e[3][0] = 0.0f;  		m->e[3][1] = 0.0f;	m->e[3][2] = 0.0f;		m->e[3][3] = 1.0f;
+	m->e[3][0] = 0.0f;  	m->e[3][1] = 0.0f;	m->e[3][2] = 0.0f;		m->e[3][3] = 1.0f;
 }
 
 void MatSetRotZ(struct Matrix *m, float a)

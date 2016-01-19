@@ -32,7 +32,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	RegisterClass(&wc);
 
 	// Create the window.
-	HWND hWnd = CreateWindowEx(0, wc.lpszClassName, L"Nova", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1500, 1500, NULL, NULL, hInstance, NULL);
+	HWND hWnd = CreateWindowEx(0, wc.lpszClassName, L"Nova", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 500, 500, NULL, NULL, hInstance, NULL);
 	if (hWnd == NULL)
 		return -1;
 	ShowWindow(hWnd, nCmdShow);
@@ -42,6 +42,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 
 	// Set up my stuff.
 	mesh = CreateMeshFromFile("../../../models/f16/f16.obj");
+	//mesh = CreateMeshFromFile("../../../models/test_tri.obj");
+
 	if (!mesh)
 		MessageBox(NULL, L"Unable to load mesh file!", L"ERROR", MB_OK);
 	mesh->texture_map = CreateTextureMapFromFile("../../../models/f16/f16s.bmp");
@@ -55,13 +57,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	while (msg.message != WM_QUIT)
 	{
 		static float ang = 0.0f;
-		
-		Matrix rot, rot2, trans, pos1;
+
+		Matrix rot, rot2, trans, pos1, pos2;
 
 		MatSetRotY(&rot, ang);
-		MatSetRotX(&rot2, ang / 1.5f);
+		MatSetRotX(&rot2, ang / 2.0f);
 		ang -= 0.002f;
-		MatSetTranslate(&trans, 0.0f, 0.0f, -3.0f);
+		MatSetTranslate(&trans, 0.0f, 0.0f, -3.f);
 		MatMul(&rot2, &rot, &pos1);
 		MatMul(&trans, &pos1, &pos);
 
@@ -112,8 +114,10 @@ HRESULT CreateD2D(HWND hWnd)
 		if (SUCCEEDED(hr))
 		{
 			D2D1_PIXEL_FORMAT pf = pRenderTarget->GetPixelFormat();
-			D2D1_BITMAP_PROPERTIES bmp = D2D1::BitmapProperties(pf);
-			hr = pRenderTarget->CreateBitmap(pRenderTarget->GetPixelSize(), bmp, &bm);
+			float dpix, dpiy;
+			pFactory->GetDesktopDpi(&dpix, &dpiy);
+			D2D1_BITMAP_PROPERTIES bmp = D2D1::BitmapProperties(pf, dpix, dpiy);
+			pRenderTarget->CreateBitmap(D2D1::SizeU(rc.right, rc.bottom), bmp, &bm);
 		}
 	}
 
@@ -152,14 +156,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (pRenderTarget == NULL)
 		{
 			CreateD2D(hWnd);
-
-			D2D1_PIXEL_FORMAT pf = pRenderTarget->GetPixelFormat();
-			float dpix, dpiy;
-			pFactory->GetDesktopDpi(&dpix, &dpiy);
-			D2D1_BITMAP_PROPERTIES bmp = D2D1::BitmapProperties(pf, dpix, dpiy);
-			RECT rc;
-			GetClientRect(hWnd, &rc);
-			pRenderTarget->CreateBitmap(D2D1::SizeU(rc.right, rc.bottom), bmp, &bm);
 		}
 
 		PAINTSTRUCT ps;
@@ -171,19 +167,18 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		clear_depth_buffer();
 
 		if (mesh != NULL)
-			render_mesh(mesh, &pos);
+			for (int i = 0; i < 1; i++)
+				render_mesh_scanline(mesh, &pos);
 
 		RECT rc;
 		GetClientRect(hWnd, &rc);
-		D2D1_RECT_U rect = D2D1::RectU(0, 0, rc.right, rc.bottom);
 		uint32_t *src = get_pixel_buffer();
-		//texture = mesh->texture_map;
-		//for (int i = 0; i < rc.bottom && i < texture->height; i++)
-		//	memcpy(src + i * rc.right, texture->buffer + i * texture->width, sizeof(uint32_t) * texture->width);
 		HRESULT hr = bm->CopyFromMemory(NULL, src, rc.right * BYTES_PER_PIXEL);
+
 		pRenderTarget->DrawBitmap(bm);
 
 		hr = pRenderTarget->EndDraw();
+
 		if (hr == D2DERR_RECREATE_TARGET)
 			DestroyD2D();
 

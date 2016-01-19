@@ -39,7 +39,7 @@ struct TextureMap *CreateTextureMapFromFile(char *file_name)
 
 		int row_padding = (texture->width * bpp / 8) % 4;
 
-		texture->buffer = (int32_t *)malloc(texture->width * texture->height * 4);
+		texture->buffer = (uint32_t *)malloc(texture->width * texture->height * 4);
 
 		fseek(file, pixel_offset, SEEK_SET);
 

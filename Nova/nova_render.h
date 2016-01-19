@@ -9,7 +9,7 @@ extern "C" {
 
 #include "nova_math.h"
 
-#define BYTES_PER_PIXEL sizeof(uint32_t)
+#define BYTES_PER_PIXEL 4
 
 	struct TextureMap
 	{
@@ -68,12 +68,13 @@ extern "C" {
 	uint32_t *get_pixel_buffer();
 	void clear_pixel_buffer();
 	void clear_depth_buffer();
-	void set_pixel(unsigned int x, unsigned int y, uint32_t rgba);
-	void set_depth(unsigned int x, unsigned int y, uint32_t z);
+	void set_pixel(int x, int y, uint32_t rgba);
 	uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 	uint32_t frgba(float r, float g, float b, float a);
 	uint32_t sample_texture_map_nearest_neighbor(struct TextureMap *texture_map, float u, float v);
-	void render_mesh(const struct Mesh *mesh, const struct Matrix *mat);
+	void render_mesh_scanline(const struct Mesh *mesh, const struct Matrix *mat);
+	void render_mesh_bary(const struct Mesh *mesh, const struct Matrix *mat);
+	void render_mesh_bary2(const struct Mesh *mesh, const struct Matrix *mat);
 
 #ifdef __cplusplus
 }
