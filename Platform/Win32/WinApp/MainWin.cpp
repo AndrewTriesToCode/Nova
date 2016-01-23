@@ -17,7 +17,6 @@ void DestroyD2D();
 
 // My vars.
 Mesh *mesh;
-TextureMap *texture;
 Matrix pos, persp;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdShow)
@@ -46,7 +45,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 
 	if (!mesh)
 		MessageBox(NULL, L"Unable to load mesh file!", L"ERROR", MB_OK);
-	mesh->texture_map = CreateTextureMapFromFile("../../../models/f16/f16s.bmp");
 
 	// Run the message loo0
 	MSG msg = { 0 };
@@ -167,8 +165,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		clear_depth_buffer();
 
 		if (mesh != NULL)
-			for (int i = 0; i < 1; i++)
-				render_mesh_scanline(mesh, &pos);
+			render_mesh_bary(mesh, &pos);
 
 		RECT rc;
 		GetClientRect(hWnd, &rc);

@@ -21,7 +21,7 @@ struct Matrix screen_matrix;
 struct Matrix projection_matrix;
 
 static float calc_2xtri_area(struct Vector *v1, struct Vector *v2);
-static void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, struct UVCoord *uv0, struct UVCoord *uv1, struct UVCoord *uv2, struct TextureMap *tm);
+static void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, struct UVCoord *uv0, struct UVCoord *uv1, struct UVCoord *uv2, struct Material *material);
 static void process_pixel_default(int x, int y, int r, int g, int b, int a, float light);
 
 static bool set_depth_if_z_is_closer(int x, int y, float Z);
@@ -80,6 +80,7 @@ void render_mesh_scanline(const struct Mesh *mesh, const struct Matrix *mat)
 	struct Triangle *tris = mesh->triangles;
 	struct Vertex *verts = mesh->vertices;
 	struct UVCoord *uvcoords = mesh->uvcoords;
+	struct Material *materials = mesh->materials;
 
 	MatMul(&projection_matrix, mat, &final_mat);
 	MatMul(&screen_matrix, &final_mat, &render_mat);
@@ -131,12 +132,12 @@ void render_mesh_scanline(const struct Mesh *mesh, const struct Matrix *mat)
 			uv2.u = uvcoords[tris[i].uv2].u * v2.pos.z;
 			uv2.v = uvcoords[tris[i].uv2].v * v2.pos.z;
 
-			raster_scanline(&v0, &v1, &v2, &uv0, &uv1, &uv2, mesh->texture_map);
+			raster_scanline(&v0, &v1, &v2, &uv0, &uv1, &uv2, &materials[tris[i].material]);
 		}
 	}
 }
 
-void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, struct UVCoord *uv0, struct UVCoord *uv1, struct UVCoord *uv2, struct TextureMap *tm)
+void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, struct UVCoord *uv0, struct UVCoord *uv1, struct UVCoord *uv2, struct Material *material)
 {
 	struct Vertex *v_top, *v_mid, *v_bot, *v_temp;
 	v_top = v0;
@@ -304,7 +305,7 @@ void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, st
 			if (set_depth_if_z_is_closer(x, y, zi))
 			{
 				uint8_t diffuse[4] = { 255, 255, 255, 255 };
-				*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(tm, u, v);
+				//*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(tm, u, v);
 
 				process_pixel_default(x, y, diffuse[2], diffuse[1], diffuse[0], diffuse[3], light);
 			}
@@ -425,7 +426,7 @@ void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, st
 			if (set_depth_if_z_is_closer(x, y, zi))
 			{
 				uint8_t diffuse[4] = { 255, 255, 255, 255 };
-				*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(tm, u, v);
+				//*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(, u, v);
 
 				process_pixel_default(x, y, diffuse[2], diffuse[1], diffuse[0], diffuse[3], light);
 			}
@@ -462,6 +463,7 @@ void render_mesh_bary(const struct Mesh *mesh, const struct Matrix *mat)
 	struct Triangle *tris = mesh->triangles;
 	struct Vertex *verts = mesh->vertices;
 	struct UVCoord *uvcoords = mesh->uvcoords;
+	struct Material *materials = mesh->materials;
 
 	MatMul(&projection_matrix, mat, &final_mat);
 	MatMul(&screen_matrix, &final_mat, &render_mat);
@@ -559,7 +561,7 @@ void render_mesh_bary(const struct Mesh *mesh, const struct Matrix *mat)
 							float light = v0.light * w0 + v1.light * w1 + v2.light * w2;
 
 							uint8_t diffuse[4] = { 255, 255, 255, 255 };
-							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(mesh->texture_map, u, v);
+							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(materials[tris[i].material].tex_map, u, v);
 
 							process_pixel_default(x, y, diffuse[2], diffuse[1], diffuse[0], diffuse[3], light);
 						}
@@ -588,6 +590,7 @@ void render_mesh_bary2(const struct Mesh *mesh, const struct Matrix *mat)
 	struct Triangle *tris = mesh->triangles;
 	struct Vertex *verts = mesh->vertices;
 	struct UVCoord *uvcoords = mesh->uvcoords;
+	struct Material *materials = mesh->materials;
 
 	MatMul(&projection_matrix, mat, &final_mat);
 	MatMul(&screen_matrix, &final_mat, &render_mat);
@@ -689,7 +692,7 @@ void render_mesh_bary2(const struct Mesh *mesh, const struct Matrix *mat)
 							float light = v0.light * w0 + v1.light * w1 + v2.light * w2;
 
 							uint8_t diffuse[4] = { 255, 255, 255, 255 };
-							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(mesh->texture_map, u, v);
+							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(materials[tris[i].material].tex_map, u, v);
 
 							uint8_t r, g, b, a;
 							r = (int)(light * diffuse[2] + 0.5f);

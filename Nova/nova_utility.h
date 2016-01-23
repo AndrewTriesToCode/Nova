@@ -7,11 +7,10 @@ extern "C" {
 
 #include "nova_render.h"
 
-	struct TextureMap *CreateTextureMapFromFile(char *file_name);
-	void DestroyTextureMap(struct TextureMap *texture_map);
-
 	struct Mesh *CreateMeshFromFile(char *file_name);
 	void DestroyMesh(struct Mesh *mesh);
+
+	void DestroyTextureMap(struct TextureMap *texture);
 
 #ifdef __cplusplus
 }
