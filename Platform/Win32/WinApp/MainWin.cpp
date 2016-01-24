@@ -165,7 +165,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		clear_depth_buffer();
 
 		if (mesh != NULL)
-			render_mesh_bary(mesh, &pos);
+			render_mesh_bary_step(mesh, &pos);
 
 		RECT rc;
 		GetClientRect(hWnd, &rc);

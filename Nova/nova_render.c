@@ -20,11 +20,16 @@ static struct TextureMap *depth_buffer;
 struct Matrix screen_matrix;
 struct Matrix projection_matrix;
 
-static float calc_2xtri_area(struct Vector *v1, struct Vector *v2);
+static inline float calc_2xtri_area(struct Vector *v1, struct Vector *v2);
 static void raster_scanline(struct Vertex *v0, struct Vertex *v1, struct Vertex *v2, struct UVCoord *uv0, struct UVCoord *uv1, struct UVCoord *uv2, struct Material *material);
-static void process_pixel_default(int x, int y, int r, int g, int b, int a, float light);
+static inline void process_pixel_default(int x, int y, int r, int g, int b, int a, float light);
 
-static bool set_depth_if_z_is_closer(int x, int y, float Z);
+static inline void set_pixel(int x, int y, uint32_t rgba);
+static inline uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+//static uint32_t frgba(float r, float g, float b, float a);
+static inline uint32_t sample_texture_map_nearest_neighbor(struct TextureMap *texture_map, float u, float v);
+
+static inline bool set_depth_if_z_is_closer(int x, int y, float Z);
 
 #define MAX_NUM_VERTS 8192
 static struct Vector vert_buffer[MAX_NUM_VERTS];
@@ -571,6 +576,149 @@ void render_mesh_bary(const struct Mesh *mesh, const struct Matrix *mat)
 	}
 }
 
+void render_mesh_bary_step(const struct Mesh *mesh, const struct Matrix *mat)
+{
+	struct Vertex v0, v1, v2;
+	struct Vector tranformed_normal;
+	struct Matrix final_mat, render_mat;
+
+	struct Triangle *tris = mesh->triangles;
+	struct Vertex *verts = mesh->vertices;
+	struct UVCoord *uvcoords = mesh->uvcoords;
+	struct Material *materials = mesh->materials;
+
+	MatMul(&projection_matrix, mat, &final_mat);
+	MatMul(&screen_matrix, &final_mat, &render_mat);
+
+	struct Vector cull_vec = { 0.0f, 0.0f, -1.0f };
+
+	for (int i = 0; i < mesh->num_triangles; i++)
+	{
+		MatVecMul(mat, &mesh->triangles[i].normal, &tranformed_normal);
+
+		if (VecDot3(&cull_vec, &tranformed_normal) < 0)
+		{
+			struct Vector light_vec = { 0.0f, 0.0f, -1.0f };
+			VecNormalize(&light_vec, &light_vec);
+
+			VecNormalize(&tranformed_normal, &tranformed_normal);
+
+			MatVecMul(mat, &mesh->normals[mesh->triangles[i].n0], &tranformed_normal);
+			v0.light = max(0.4f, -VecDot3(&tranformed_normal, &light_vec));
+
+			MatVecMul(mat, &mesh->normals[mesh->triangles[i].n1], &tranformed_normal);
+			v1.light = max(0.4f, -VecDot3(&tranformed_normal, &light_vec));
+
+			MatVecMul(mat, &mesh->normals[mesh->triangles[i].n2], &tranformed_normal);
+			v2.light = max(0.4f, -VecDot3(&tranformed_normal, &light_vec));
+
+			MatVecMul(&render_mat, &verts[tris[i].v0].pos, &v0.pos);
+			MatVecMul(&render_mat, &verts[tris[i].v1].pos, &v1.pos);
+			MatVecMul(&render_mat, &verts[tris[i].v2].pos, &v2.pos);
+
+			v0.pos.x /= v0.pos.w;
+			v0.pos.y /= v0.pos.w;
+			v0.pos.z /= v0.pos.w;
+
+			v1.pos.x /= v1.pos.w;
+			v1.pos.y /= v1.pos.w;
+			v1.pos.z /= v1.pos.w;
+
+			v2.pos.x /= v2.pos.w;
+			v2.pos.y /= v2.pos.w;
+			v2.pos.z /= v2.pos.w;
+
+			struct UVCoord uv0 = { uvcoords[tris[i].uv0].u * v0.pos.z, uvcoords[tris[i].uv0].v * v0.pos.z };
+			struct UVCoord uv1 = { uvcoords[tris[i].uv1].u * v1.pos.z, uvcoords[tris[i].uv1].v * v1.pos.z };
+			struct UVCoord uv2 = { uvcoords[tris[i].uv2].u * v2.pos.z, uvcoords[tris[i].uv2].v * v2.pos.z };
+
+			int xmin = max(0, (int)min(min(v0.pos.x, v1.pos.x), v2.pos.x));
+			int xmax = min((int)max(max(v0.pos.x, v1.pos.x), v2.pos.x) + 1, screen_width - 1);
+			int ymin = max(0, (int)min(min(v0.pos.y, v1.pos.y), v2.pos.y));
+			int ymax = min((int)max(max(v0.pos.y, v1.pos.y), v2.pos.y) + 1, screen_height - 1);
+
+			struct Vector v0v1;
+			VecSub(&v1.pos, &v0.pos, &v0v1);
+
+			struct Vector v1v2;
+			VecSub(&v2.pos, &v1.pos, &v1v2);
+
+			struct Vector v2v0;
+			VecSub(&v0.pos, &v2.pos, &v2v0);
+
+			float t_area_inv = -1.0f / calc_2xtri_area(&v0v1, &v2v0);
+
+			struct Vector p_vec;
+			struct Vector p = { (float)xmin, (float)ymin };
+
+			VecSub(&p, &v1, &p_vec);
+			float w0 = calc_2xtri_area(&v1v2, &p_vec);
+			w0 *= t_area_inv;
+			float ow0 = w0;
+			float w0dx = -v1v2.y * t_area_inv;
+			float w0dy = v1v2.x * t_area_inv;
+			float w0ady = 0.0f;
+
+			VecSub(&p, &v2, &p_vec);
+			float w1 = calc_2xtri_area(&v2v0, &p_vec);
+			w1 *= t_area_inv;
+			float ow1 = w1;
+			float w1dx = -v2v0.y * t_area_inv;
+			float w1dy = v2v0.x * t_area_inv;
+			float w1ady = 0.0f;
+
+			VecSub(&p, &v0, &p_vec);
+			float w2 = calc_2xtri_area(&v0v1, &p_vec);
+			w2 *= t_area_inv;
+			float ow2 = w2;
+			float w2dx = -v0v1.y * t_area_inv;
+			float w2dy = v0v1.x * t_area_inv;
+			float w2ady = 0.0f;
+
+			uint8_t diffuse[4] = { 255, 255, 255, 255 };
+
+			for (int y = ymin; y <= ymax; y++)
+			{
+				for (int x = xmin; x <= xmax; x++)
+				{
+					if (w0 >= 0.0f && w1 >= 0.0f && w2 >= 0.0f)
+					{
+						float Z = v0.pos.z * w0 + v1.pos.z * w1 + v2.pos.z * w2;
+						float z = 1.0f / Z;
+
+						if (set_depth_if_z_is_closer(x, y, Z))
+						{
+							float ui = uv0.u * w0 + uv1.u * w1 + uv2.u * w2;
+							float u = z * ui;
+
+							float vi = uv0.v * w0 + uv1.v * w1 + uv2.v * w2;
+							float v = z * vi;
+
+							float light = v0.light * w0 + v1.light * w1 + v2.light * w2;
+
+							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(materials[tris[i].material].tex_map, u, v);
+
+							process_pixel_default(x, y, diffuse[2], diffuse[1], diffuse[0], diffuse[3], light);
+						}
+					}
+
+					w0 += w0dx;
+					w1 += w1dx;
+					w2 += w2dx;
+				}
+
+				w0ady += w0dy;
+				w1ady += w1dy;
+				w2ady += w2dy;
+
+				w0 = ow0 + w0ady;
+				w1 = ow1 + w1ady;
+				w2 = ow2 + w2ady;
+			}
+		}
+	}
+}
+
 void process_pixel_default(int x, int y, int r, int g, int b, int a, float light)
 {
 	r = max(0, min((int)(light * r), 255));
@@ -714,7 +862,7 @@ float calc_2xtri_area(struct Vector *v1, struct Vector *v2)
 	return area;
 }
 
-static bool set_depth_if_z_is_closer(int x, int y, float Z)
+bool set_depth_if_z_is_closer(int x, int y, float Z)
 {
 	float current_z = *(float*)&(depth_buffer->buffer[x + y * screen_width]);
 	if (current_z > Z)
@@ -742,10 +890,10 @@ uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	return (r << 16) | (g << 8) | (b << 0) | (a << 24);
 }
 
-uint32_t frgba(float r, float g, float b, float a)
-{
-	return rgba((int)(r * 255 + 0.5f), (int)(g * 255 + 0.5f), (int)(b * 255 + 0.5f), (int)(a * 255 + 0.5f));
-}
+// uint32_t frgba(float r, float g, float b, float a)
+//{
+//	return rgba((int)(r * 255 + 0.5f), (int)(g * 255 + 0.5f), (int)(b * 255 + 0.5f), (int)(a * 255 + 0.5f));
+//}
 
 uint32_t sample_texture_map_nearest_neighbor(struct TextureMap *texture_map, float u, float v)
 {
