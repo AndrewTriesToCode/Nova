@@ -13,7 +13,7 @@ static struct TextureMap *CreateTextureMapFromFile(char *file_name);
 static bool CreateMaterialsFromFile(char *file_name, struct Mesh *mesh);
 static void DestroyMaterial(struct Material *material);
 
-static void GetFilePath(char *full_file_path, char *file_path);
+static bool GetFilePath(char *full_file_path, char *file_path);
 
 struct Mesh *CreateMeshFromFile(char *file_name)
 {
@@ -52,13 +52,13 @@ struct Mesh *CreateMeshFromFile(char *file_name)
 		case 'm':
 			if (strstr(line_buf, "mtllib") != NULL)
 			{
-				char material_file_name[80], full_path[80];
+				char material_file_name[256], full_path[256];
 				
 				sscanf(line_buf, "mtllib %s", material_file_name);
 				
 				GetFilePath(file_name, full_path);
 
-				strncat(full_path, material_file_name, 80 - strlen(material_file_name));
+				strncat(full_path, material_file_name, 256 - strlen(material_file_name));
 
 				if (!CreateMaterialsFromFile(full_path, mesh))
 					return NULL;
@@ -324,13 +324,13 @@ bool CreateMaterialsFromFile(char *file_name, struct Mesh *mesh)
 		case 'm':
 			if (strstr(line_buf, "map_Kd") != NULL)
 			{
-				char texture_file_name[80];
+				char texture_file_name[256];
 				sscanf(line_buf, "map_Kd %s", texture_file_name);
 				
-				char full_path[80];
+				char full_path[256];
 				GetFilePath(file_name, full_path);
 
-				strncat(full_path, texture_file_name, 80 - strlen(texture_file_name));
+				strncat(full_path, texture_file_name, 256 - strlen(texture_file_name));
 
 				m_buffer[m_count - 1].tex_map = CreateTextureMapFromFile(full_path);
 
@@ -391,7 +391,6 @@ struct TextureMap *CreateTextureMapFromFile(char *file_name)
 		int16_t bpp;
 		fseek(file, 28, SEEK_SET);
 		fread(&bpp, sizeof(bpp), 1, file);
-		int i = 0;
 
 		int row_padding = (texture->width * bpp / 8) % 4;
 
@@ -427,17 +426,19 @@ void DestroyTextureMap(struct TextureMap *texture)
 	}
 }
 
-void GetFilePath(char *full_file_path, char *file_path)
+bool GetFilePath(char *full_file_path, char *file_path)
 {
 	// Note this function is not safe!
 	// It assumes file_path is large enough to hold the result.
 
 	char *end_of_path = strrchr(full_file_path, '/');
 	if (end_of_path == NULL)
-		return NULL;
+		return false;
 
 	size_t path_len = end_of_path - full_file_path + 1;
 
 	strncpy(file_path, full_file_path, path_len);
 	file_path[path_len] = '\0';
+    
+    return true;
 }

@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		183125FF1C5AF10300184929 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 183125FE1C5AF10300184929 /* AppDelegate.m */; };
+		183126021C5AF10300184929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 183126011C5AF10300184929 /* main.m */; };
+		183126051C5AF10300184929 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183126041C5AF10300184929 /* ViewController.m */; };
+		183126071C5AF10300184929 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 183126061C5AF10300184929 /* Assets.xcassets */; };
+		1831260A1C5AF10300184929 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183126081C5AF10300184929 /* Main.storyboard */; };
+		183126251C5AF67B00184929 /* libNova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 183126221C5AF48500184929 /* libNova.a */; };
+		183126471C5AFB2400184929 /* f16.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 183126321C5AFB2400184929 /* f16.mtl */; };
+		183126481C5AFB2400184929 /* f16.obj in Resources */ = {isa = PBXBuildFile; fileRef = 183126331C5AFB2400184929 /* f16.obj */; };
+		183126491C5AFB2400184929 /* F16s.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 183126341C5AFB2400184929 /* F16s.bmp */; };
+		1831264A1C5AFB2400184929 /* F16t.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 183126351C5AFB2400184929 /* F16t.bmp */; };
+		183126561C5B000600184929 /* NovaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 183126551C5B000600184929 /* NovaView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		183126211C5AF48500184929 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 183125D81C5AEBD600184929;
+			remoteInfo = Nova;
+		};
+		183126231C5AF4C400184929 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 183125D71C5AEBD600184929;
+			remoteInfo = Nova;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		183125FA1C5AF10300184929 /* NOVA - OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NOVA - OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		183125FD1C5AF10300184929 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		183125FE1C5AF10300184929 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		183126011C5AF10300184929 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		183126031C5AF10300184929 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		183126041C5AF10300184929 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		183126061C5AF10300184929 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		183126091C5AF10300184929 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1831260B1C5AF10300184929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1831261D1C5AF48500184929 /* Nova.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nova.xcodeproj; path = ../Nova/Nova.xcodeproj; sourceTree = "<group>"; };
+		183126271C5AFB2400184929 /* bunny-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bunny-1500.obj"; sourceTree = "<group>"; };
+		183126281C5AFB2400184929 /* bunny-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bunny-5000.obj"; sourceTree = "<group>"; };
+		183126291C5AFB2400184929 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
+		1831262A1C5AFB2400184929 /* bunny_7k.off */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny_7k.off; sourceTree = "<group>"; };
+		1831262B1C5AFB2400184929 /* cow-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cow-1500.obj"; sourceTree = "<group>"; };
+		1831262C1C5AFB2400184929 /* cow-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cow-5000.obj"; sourceTree = "<group>"; };
+		1831262D1C5AFB2400184929 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		1831262E1C5AFB2400184929 /* cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cup.obj; sourceTree = "<group>"; };
+		1831262F1C5AFB2400184929 /* dragon-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dragon-1500.obj"; sourceTree = "<group>"; };
+		183126301C5AFB2400184929 /* dragon-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dragon-5000.obj"; sourceTree = "<group>"; };
+		183126321C5AFB2400184929 /* f16.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.mtl; sourceTree = "<group>"; };
+		183126331C5AFB2400184929 /* f16.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.obj; sourceTree = "<group>"; };
+		183126341C5AFB2400184929 /* F16s.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = F16s.bmp; sourceTree = "<group>"; };
+		183126351C5AFB2400184929 /* F16t.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = F16t.bmp; sourceTree = "<group>"; };
+		183126361C5AFB2400184929 /* lamp600.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lamp600.obj; sourceTree = "<group>"; };
+		183126371C5AFB2400184929 /* lego.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lego.obj; sourceTree = "<group>"; };
+		183126381C5AFB2400184929 /* quad.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad.obj; sourceTree = "<group>"; };
+		183126391C5AFB2400184929 /* shammy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shammy.obj; sourceTree = "<group>"; };
+		1831263A1C5AFB2400184929 /* snakie.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snakie.obj; sourceTree = "<group>"; };
+		1831263B1C5AFB2400184929 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
+		1831263C1C5AFB2400184929 /* test_tri.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_tri.obj; sourceTree = "<group>"; };
+		183126541C5B000600184929 /* NovaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NovaView.h; path = ../NovaView.h; sourceTree = "<group>"; };
+		183126551C5B000600184929 /* NovaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NovaView.m; path = ../NovaView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		183125F71C5AF10300184929 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183126251C5AF67B00184929 /* libNova.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		183125F11C5AF10300184929 = {
+			isa = PBXGroup;
+			children = (
+				183125FC1C5AF10300184929 /* NOVA - OS X */,
+				183125FB1C5AF10300184929 /* Products */,
+				1831261D1C5AF48500184929 /* Nova.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		183125FB1C5AF10300184929 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				183125FA1C5AF10300184929 /* NOVA - OS X.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		183125FC1C5AF10300184929 /* NOVA - OS X */ = {
+			isa = PBXGroup;
+			children = (
+				183125FD1C5AF10300184929 /* AppDelegate.h */,
+				183125FE1C5AF10300184929 /* AppDelegate.m */,
+				183126541C5B000600184929 /* NovaView.h */,
+				183126551C5B000600184929 /* NovaView.m */,
+				183126031C5AF10300184929 /* ViewController.h */,
+				183126041C5AF10300184929 /* ViewController.m */,
+				183126061C5AF10300184929 /* Assets.xcassets */,
+				183126081C5AF10300184929 /* Main.storyboard */,
+				1831260B1C5AF10300184929 /* Info.plist */,
+				183126261C5AFB2400184929 /* Models */,
+				183126001C5AF10300184929 /* Supporting Files */,
+			);
+			path = "NOVA - OS X";
+			sourceTree = "<group>";
+		};
+		183126001C5AF10300184929 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				183126011C5AF10300184929 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1831261E1C5AF48500184929 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				183126221C5AF48500184929 /* libNova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		183126261C5AFB2400184929 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				183126271C5AFB2400184929 /* bunny-1500.obj */,
+				183126281C5AFB2400184929 /* bunny-5000.obj */,
+				183126291C5AFB2400184929 /* bunny.obj */,
+				1831262A1C5AFB2400184929 /* bunny_7k.off */,
+				1831262B1C5AFB2400184929 /* cow-1500.obj */,
+				1831262C1C5AFB2400184929 /* cow-5000.obj */,
+				1831262D1C5AFB2400184929 /* cube.obj */,
+				1831262E1C5AFB2400184929 /* cup.obj */,
+				1831262F1C5AFB2400184929 /* dragon-1500.obj */,
+				183126301C5AFB2400184929 /* dragon-5000.obj */,
+				183126311C5AFB2400184929 /* f16 */,
+				183126361C5AFB2400184929 /* lamp600.obj */,
+				183126371C5AFB2400184929 /* lego.obj */,
+				183126381C5AFB2400184929 /* quad.obj */,
+				183126391C5AFB2400184929 /* shammy.obj */,
+				1831263A1C5AFB2400184929 /* snakie.obj */,
+				1831263B1C5AFB2400184929 /* teapot.obj */,
+				1831263C1C5AFB2400184929 /* test_tri.obj */,
+			);
+			name = Models;
+			path = ../../../../Models;
+			sourceTree = "<group>";
+		};
+		183126311C5AFB2400184929 /* f16 */ = {
+			isa = PBXGroup;
+			children = (
+				183126321C5AFB2400184929 /* f16.mtl */,
+				183126331C5AFB2400184929 /* f16.obj */,
+				183126341C5AFB2400184929 /* F16s.bmp */,
+				183126351C5AFB2400184929 /* F16t.bmp */,
+			);
+			path = f16;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		183125F91C5AF10300184929 /* NOVA - OS X */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1831260E1C5AF10300184929 /* Build configuration list for PBXNativeTarget "NOVA - OS X" */;
+			buildPhases = (
+				183125F61C5AF10300184929 /* Sources */,
+				183125F71C5AF10300184929 /* Frameworks */,
+				183125F81C5AF10300184929 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				183126241C5AF4C400184929 /* PBXTargetDependency */,
+			);
+			name = "NOVA - OS X";
+			productName = "NOVA - OS X";
+			productReference = 183125FA1C5AF10300184929 /* NOVA - OS X.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		183125F21C5AF10300184929 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Andrew White";
+				TargetAttributes = {
+					183125F91C5AF10300184929 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 183125F51C5AF10300184929 /* Build configuration list for PBXProject "NOVA - OS X" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 183125F11C5AF10300184929;
+			productRefGroup = 183125FB1C5AF10300184929 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1831261E1C5AF48500184929 /* Products */;
+					ProjectRef = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				183125F91C5AF10300184929 /* NOVA - OS X */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		183126221C5AF48500184929 /* libNova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNova.a;
+			remoteRef = 183126211C5AF48500184929 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		183125F81C5AF10300184929 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183126071C5AF10300184929 /* Assets.xcassets in Resources */,
+				183126491C5AFB2400184929 /* F16s.bmp in Resources */,
+				1831264A1C5AFB2400184929 /* F16t.bmp in Resources */,
+				1831260A1C5AF10300184929 /* Main.storyboard in Resources */,
+				183126481C5AFB2400184929 /* f16.obj in Resources */,
+				183126471C5AFB2400184929 /* f16.mtl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		183125F61C5AF10300184929 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				183126561C5B000600184929 /* NovaView.m in Sources */,
+				183126051C5AF10300184929 /* ViewController.m in Sources */,
+				183126021C5AF10300184929 /* main.m in Sources */,
+				183125FF1C5AF10300184929 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		183126241C5AF4C400184929 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Nova;
+			targetProxy = 183126231C5AF4C400184929 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		183126081C5AF10300184929 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				183126091C5AF10300184929 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1831260C1C5AF10300184929 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1831260D1C5AF10300184929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1831260F1C5AF10300184929 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "NOVA - OS X/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Finbuckle.Nova.NOVA---OS-X";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		183126101C5AF10300184929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "NOVA - OS X/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Finbuckle.Nova.NOVA---OS-X";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		183125F51C5AF10300184929 /* Build configuration list for PBXProject "NOVA - OS X" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1831260C1C5AF10300184929 /* Debug */,
+				1831260D1C5AF10300184929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1831260E1C5AF10300184929 /* Build configuration list for PBXNativeTarget "NOVA - OS X" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1831260F1C5AF10300184929 /* Debug */,
+				183126101C5AF10300184929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 183125F21C5AF10300184929 /* Project object */;
+}
