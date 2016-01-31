@@ -17,10 +17,22 @@ void DestroyD2D();
 
 // My vars.
 Mesh *mesh;
-Matrix pos, persp;
+RenderContext context;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdShow)
 {
+	// Set up my stuff.
+	mesh = CreateMeshFromFile("../../../models/f16/f16.obj");
+	if (!mesh)
+		MessageBox(NULL, L"Unable to load mesh file!", L"ERROR", MB_OK);
+
+	init(&context);
+
+	Matrix rot, rot2, trans, pos, pos1, screen_mat, proj_mat;
+	context.mv_mat = &pos;
+	context.proj_mat = &proj_mat;
+	context.screen_mat = &screen_mat;
+
 	SetProcessDPIAware();
 
 	// Register the window class.
@@ -39,13 +51,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory)))
 		return -1;
 
-	// Set up my stuff.
-	mesh = CreateMeshFromFile("../../../models/f16/f16.obj");
-	//mesh = CreateMeshFromFile("../../../models/test_tri.obj");
-
-	if (!mesh)
-		MessageBox(NULL, L"Unable to load mesh file!", L"ERROR", MB_OK);
-
 	// Run the message loo0
 	MSG msg = { 0 };
 	DWORD start = GetTickCount();
@@ -56,12 +61,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	{
 		static float ang = 0.0f;
 
-		Matrix rot, rot2, trans, pos1, pos2;
-
 		MatSetRotY(&rot, ang);
 		MatSetRotX(&rot2, ang / 2.0f);
 		ang -= 0.002f;
-		MatSetTranslate(&trans, 0.0f, 0.0f, -3.f);
+		MatSetTranslate(&trans, 0.0f, 0.0f, -5.f);
 		MatMul(&rot2, &rot, &pos1);
 		MatMul(&trans, &pos1, &pos);
 
@@ -161,15 +164,14 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		pRenderTarget->BeginDraw();
 
-		clear_pixel_buffer();
-		clear_depth_buffer();
+		clear_pixel_buffer(&context);
+		clear_depth_buffer(&context);
 
-		if (mesh != NULL)
-			render_mesh_bary_step(mesh, &pos);
+		render_mesh(&context, mesh);
 
 		RECT rc;
 		GetClientRect(hWnd, &rc);
-		uint32_t *src = get_pixel_buffer();
+		uint32_t *src = get_pixel_buffer(&context);
 		HRESULT hr = bm->CopyFromMemory(NULL, src, rc.right * BYTES_PER_PIXEL);
 
 		pRenderTarget->DrawBitmap(bm);
@@ -189,8 +191,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		DestroyD2D();
 
-		set_screen_size(rc.right, rc.bottom);
-		set_hfov(60.0f);
+		set_screen_size(&context, rc.right, rc.bottom);
+		set_hfov(&context, 60.0f);
 
 		return 0;
 	}

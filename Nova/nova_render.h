@@ -10,6 +10,7 @@ extern "C" {
 #include "nova_math.h"
 
 #define BYTES_PER_PIXEL 4
+#define MAX_MESH_VERTICES 4096
 
 	struct TextureMap
 	{
@@ -65,16 +66,31 @@ extern "C" {
 		int num_materials;
 	};
 
-	void set_screen_size(int width, int height);
-	void set_hfov(float fov);
-	uint32_t *get_pixel_buffer();
-	void clear_pixel_buffer();
-	void clear_depth_buffer();
-	
-	void render_mesh_scanline(const struct Mesh *mesh, const struct Matrix *mat);
-	void render_mesh_bary(const struct Mesh *mesh, const struct Matrix *mat);
-	void render_mesh_bary2(const struct Mesh *mesh, const struct Matrix *mat);
-	void render_mesh_bary_step(const struct Mesh *mesh, const struct Matrix *mat);
+	struct RenderContext
+	{
+		int screen_width;
+		int screen_height;
+		float hfov;
+		float vfov;
+
+		struct TextureMap *pixel_buffer;
+		struct TextureMap *depth_buffer;
+		struct Vector *vertex_buffer;
+		struct Vector *vertex_normal_buffer;
+
+		struct Matrix *mv_mat;
+		struct Matrix *proj_mat;
+		struct Matrix *screen_mat;
+		struct Matrix *render_mat;
+	};
+
+	void init(struct RenderContext *context);
+	void set_screen_size(struct RenderContext *context, int width, int height);
+	void set_hfov(struct RenderContext *context, float fov);
+	uint32_t *get_pixel_buffer(struct RenderContext *context);
+	void clear_pixel_buffer(struct RenderContext *context);
+	void clear_depth_buffer(struct RenderContext *context);
+	void render_mesh(struct RenderContext *context, struct Mesh *mesh);
 
 #ifdef __cplusplus
 }

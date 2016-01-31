@@ -125,10 +125,13 @@ void MatCopy(const struct Matrix *m, struct Matrix *d)
 
 void MatVecMul(const struct Matrix *m, const struct Vector* v, struct Vector* r)
 {
-	r->x = m->e[0][0] * v->x + m->e[0][1] * v->y + m->e[0][2] * v->z + m->e[0][3] * v->w;
-	r->y = m->e[1][0] * v->x + m->e[1][1] * v->y + m->e[1][2] * v->z + m->e[1][3] * v->w;
-	r->z = m->e[2][0] * v->x + m->e[2][1] * v->y + m->e[2][2] * v->z + m->e[2][3] * v->w;
-	r->w = m->e[3][0] * v->x + m->e[3][1] * v->y + m->e[3][2] * v->z + m->e[3][3] * v->w;
+	struct Vector temp;
+	temp.x = m->e[0][0] * v->x + m->e[0][1] * v->y + m->e[0][2] * v->z + m->e[0][3] * v->w;
+	temp.y = m->e[1][0] * v->x + m->e[1][1] * v->y + m->e[1][2] * v->z + m->e[1][3] * v->w;
+	temp.z = m->e[2][0] * v->x + m->e[2][1] * v->y + m->e[2][2] * v->z + m->e[2][3] * v->w;
+	temp.w = m->e[3][0] * v->x + m->e[3][1] * v->y + m->e[3][2] * v->z + m->e[3][3] * v->w;
+
+	*r = temp;
 }
 
 void MatMul(const struct Matrix *m1, const struct Matrix* m2, struct Matrix *r)

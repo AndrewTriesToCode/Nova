@@ -17,6 +17,8 @@ static bool GetFilePath(char *full_file_path, char *file_path);
 
 struct Mesh *CreateMeshFromFile(char *file_name)
 {
+	// Note this function does not clean up properly if an error occurs!
+
 	int v_count = 0;
 	int v_alloc = 1;
 	struct Vertex *v_buffer = (struct Vertex *)malloc(v_alloc * sizeof(struct Vertex));
@@ -213,7 +215,7 @@ struct Mesh *CreateMeshFromFile(char *file_name)
 
 	fclose(file);
 
-	if (v_count > 0)
+	if (v_count > 0 && v_count < MAX_MESH_VERTICES)
 	{
 		mesh->vertices = (struct Vertex *)malloc(v_count * sizeof(struct Vertex));
 		mesh->num_vertices = v_count;
@@ -237,7 +239,6 @@ struct Mesh *CreateMeshFromFile(char *file_name)
 		mesh->num_normals = n_count;
 		memcpy(mesh->normals, n_buffer, n_count * sizeof(struct Vector));
 	}
-
 	if (n_buffer != NULL)
 		free(n_buffer);
 
@@ -247,7 +248,6 @@ struct Mesh *CreateMeshFromFile(char *file_name)
 		mesh->num_uvcoords = uv_count;
 		memcpy(mesh->uvcoords, uv_buffer, uv_count * sizeof(struct UVCoord));
 	}
-
 	if (uv_buffer != NULL)
 		free(uv_buffer);
 
@@ -285,6 +285,7 @@ void DestroyMesh(struct Mesh *mesh)
 
 bool CreateMaterialsFromFile(char *file_name, struct Mesh *mesh)
 {
+	// note this function does not clean up properly if an error occurs
 	FILE *file = fopen(file_name, "r");
 	if (file == NULL)
 		return false;
