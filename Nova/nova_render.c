@@ -54,7 +54,7 @@ void set_screen_size(struct RenderContext *context, int width, int height)
 
 	MatSetIdentity(context->screen_mat);
 	context->screen_mat->e[0][0] = width / 2.0f;
-	context->screen_mat->e[1][1] = -height / 2.0f; // flip vertical due to windows axis
+	context->screen_mat->e[1][1] = height / 2.0f;
 	context->screen_mat->e[0][3] = width / 2.0f;
 	context->screen_mat->e[1][3] = height / 2.0f;
 }
@@ -674,7 +674,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 
 		t_area = calc_2xtri_area(v0, v1, v2);
 
-		if (t_area < 0) // skip if not facing us (< 0 because windows axis flips y)
+		if (t_area > 0)
 		{
 			//MatVecMul(mat, &mesh->normals[mesh->triangles[i].n0], &tranformed_normal);
 			v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
@@ -690,7 +690,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 			int ymin = max(0, (int)min(min(v0->pos.y, v1->pos.y), v2->pos.y));
 			int ymax = min((int)max(max(v0->pos.y, v1->pos.y), v2->pos.y) + 1, context->screen_height - 1);
 
-			float t_area_inv = 1.0f / t_area; // -1 to account for windows axis flip
+			float t_area_inv = 1.0f / t_area;
 
 			struct Vector p = { (float)xmin, (float)ymin };
 
@@ -721,7 +721,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 			{
 				for (int x = xmin; x <= xmax; x++)
 				{
-					if (w0 >= 0.0f && w1 >= 0.0f && w2 >= 0.0f)
+					if (w0 > 0.0f && w1 > 0.0f && w2 > 0.0f)
 					{
 						float Z = v0->pos.z * w0 + v1->pos.z * w1 + v2->pos.z * w2;
 						float z = 1.0f / Z;

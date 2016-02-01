@@ -163,6 +163,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		HDC hdc = BeginPaint(hWnd, &ps);
 
 		pRenderTarget->BeginDraw();
+		
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Scale(1.f, -1.f, D2D1::Point2F(0.f, 0.5f * pRenderTarget->GetSize().height)));
 
 		clear_pixel_buffer(&context);
 		clear_depth_buffer(&context);
@@ -173,7 +175,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hWnd, &rc);
 		uint32_t *src = get_pixel_buffer(&context);
 		HRESULT hr = bm->CopyFromMemory(NULL, src, rc.right * BYTES_PER_PIXEL);
-
+		
 		pRenderTarget->DrawBitmap(bm);
 
 		hr = pRenderTarget->EndDraw();
