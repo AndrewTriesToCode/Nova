@@ -51,7 +51,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR pCmdLine, int nCmdSho
 	if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory)))
 		return -1;
 
-	// Run the message loo0
+	// Run the message loop
 	MSG msg = { 0 };
 	DWORD start = GetTickCount();
 	DWORD now;

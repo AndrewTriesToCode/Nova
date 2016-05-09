@@ -75,7 +75,7 @@ extern "C" {
 
 		struct TextureMap *pixel_buffer;
 		struct TextureMap *depth_buffer;
-		struct Vector *vertex_buffer;
+		struct Vertex *vertex_buffer;
 		struct Vector *vertex_normal_buffer;
 
 		struct Matrix *mv_mat;
