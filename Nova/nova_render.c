@@ -96,20 +96,17 @@ void render_mesh(struct RenderContext *context, struct Mesh *mesh)
 {
 	if (context == NULL || mesh == NULL)
 		return;
-
-	struct Triangle *triangles = mesh->triangles;
+    
 	struct Vertex *vertices = mesh->vertices;
 	struct Vector *normals = mesh->normals;
 
 	struct Vertex *vertex_buffer = context->vertex_buffer;
 	struct Vector *vertex_normal_buffer = context->vertex_normal_buffer;
 
-	struct Matrix render_mat;
-
 	// apply the model view matrix
 	for (int i = 0; i < mesh->num_vertices; i++)
 	{
-		MatVecMul(context->mv_mat, &vertices[i].pos, &vertex_buffer[i]);
+		MatVecMul(context->mv_mat, &vertices[i].pos, &vertex_buffer[i].pos);
 	}
 
 	for (int i = 0; i < mesh->num_normals; i++)
@@ -120,7 +117,7 @@ void render_mesh(struct RenderContext *context, struct Mesh *mesh)
 	// apply the projection matrix
 	for (int i = 0; i < mesh->num_vertices; i++)
 	{
-		MatVecMul(context->proj_mat, &vertex_buffer[i], &vertex_buffer[i]);
+		MatVecMul(context->proj_mat, &vertex_buffer[i].pos, &vertex_buffer[i].pos);
 	}
 
 	// perform clipping
@@ -128,7 +125,7 @@ void render_mesh(struct RenderContext *context, struct Mesh *mesh)
 	// apply the screen matrix
 	for (int i = 0; i < mesh->num_vertices; i++)
 	{
-		MatVecMul(context->screen_mat, &vertex_buffer[i], &vertex_buffer[i]);
+		MatVecMul(context->screen_mat, &vertex_buffer[i].pos, &vertex_buffer[i].pos);
 		vertex_buffer[i].pos.x /= vertex_buffer[i].pos.w;
 		vertex_buffer[i].pos.y /= vertex_buffer[i].pos.w;
 		vertex_buffer[i].pos.z /= vertex_buffer[i].pos.w;
@@ -170,7 +167,7 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 		v1 = &verts[tris[i].v1];
 		v2 = &verts[tris[i].v2];
 
-		t_area = calc_2xtri_area(v0, v1, v2);
+		t_area = calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
 
 		if (t_area > 0)
 		{
@@ -198,10 +195,10 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 				{
 					struct Vector p = { (float)x, (float)y };
 
-					float w0 = calc_2xtri_area(v1, v2, &p);
+					float w0 = calc_2xtri_area(&v1->pos, &v2->pos, &p);
 					w0 *= t_area_inv;
 
-					float w1 = calc_2xtri_area(v0, &p, v2);
+					float w1 = calc_2xtri_area(&v0->pos, &p, &v2->pos);
 					w1 *= t_area_inv;
 
 					float w2 = 1.0f - w0 - w1;
@@ -255,8 +252,8 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 		v1 = &verts[tris[i].v1];
 		v2 = &verts[tris[i].v2];
 
-		t_area = calc_2xtri_area(v0, v1, v2);
-
+		t_area = calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
+        
 		if (t_area > 0)
 		{
 			//MatVecMul(mat, &mesh->normals[mesh->triangles[i].n0], &tranformed_normal);
@@ -276,8 +273,8 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 			float t_area_inv = 1.0f / t_area;
 
 			struct Vector p = { (float)xmin, (float)ymin };
-
-			float w0 = calc_2xtri_area(v1, v2, &p);
+            
+			float w0 = calc_2xtri_area(&v1->pos, &v2->pos, &p);
 			w0 *= t_area_inv;
 
 			float ow0 = w0;
@@ -285,7 +282,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 			float w0dy = (v2->pos.x - v1->pos.x) * t_area_inv;
 			float w0ady = 0.0f;
 
-			float w1 = calc_2xtri_area(v0, &p, v2);
+			float w1 = calc_2xtri_area(&v0->pos, &p, &v2->pos);
 			w1 *= t_area_inv;
 			float ow1 = w1;
 			float w1dx = -(v0->pos.y - v2->pos.y) * t_area_inv;
