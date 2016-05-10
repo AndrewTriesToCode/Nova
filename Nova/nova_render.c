@@ -171,9 +171,9 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 
 		if (t_area > 0)
 		{
-			v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
-			v1->light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
-			v2->light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
+			float v0_light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
+			float v1_light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
+			float v2_light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
 
 			struct UVCoord uv0 = { uvcoords[tris[i].uv0].u * v0->pos.z, uvcoords[tris[i].uv0].v * v0->pos.z };
 			struct UVCoord uv1 = { uvcoords[tris[i].uv1].u * v1->pos.z, uvcoords[tris[i].uv1].v * v1->pos.z };
@@ -215,7 +215,7 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 							float vi = uv0.v * w0 + uv1.v * w1 + uv2.v * w2;
 							float v = z * vi;
 
-							float light = v0->light * w0 + v1->light * w1 + v2->light * w2;
+							float light = v0_light * w0 + v1_light * w1 + v2_light * w2;
 
 							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(materials[tris[i].material].tex_map, u, v);
 
@@ -255,9 +255,9 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
         
 		if (t_area > 0)
 		{
-            v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
-			v1->light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
-			v2->light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
+            float v0_light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
+			float v1_light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
+			float v2_light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
 
 			struct UVCoord uv0 = { uvcoords[tris[i].uv0].u * v0->pos.z, uvcoords[tris[i].uv0].v * v0->pos.z };
 			struct UVCoord uv1 = { uvcoords[tris[i].uv1].u * v1->pos.z, uvcoords[tris[i].uv1].v * v1->pos.z };
@@ -312,7 +312,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 							float vi = uv0.v * w0 + uv1.v * w1 + uv2.v * w2;
 							float v = z * vi;
 
-							float light = v0->light * w0 + v1->light * w1 + v2->light * w2;
+							float light = v0_light * w0 + v1_light * w1 + v2_light * w2;
 
 							*((uint32_t *)diffuse) = sample_texture_map_nearest_neighbor(materials[tris[i].material].tex_map, u, v);
 

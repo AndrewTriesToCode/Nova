@@ -31,7 +31,6 @@ extern "C" {
 	struct Vertex
 	{
 		struct Vector pos;
-		float light;
 	};
 
 	struct Triangle
