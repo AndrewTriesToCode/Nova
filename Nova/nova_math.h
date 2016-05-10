@@ -6,6 +6,9 @@ extern "C" {
 #endif
 
 #define PI 3.14159265358979323846f
+    
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
 
 struct Vector
 {

@@ -171,7 +171,6 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 
 		if (t_area > 0)
 		{
-			//MatVecMul(mat, &mesh->normals[mesh->triangles[i].n0], &tranformed_normal);
 			v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
 			v1->light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
 			v2->light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
@@ -256,8 +255,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
         
 		if (t_area > 0)
 		{
-			//MatVecMul(mat, &mesh->normals[mesh->triangles[i].n0], &tranformed_normal);
-			v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
+            v0->light = max(0.4f, -VecDot3(&normals[tris[i].n0], &light_vec));
 			v1->light = max(0.4f, -VecDot3(&normals[tris[i].n1], &light_vec));
 			v2->light = max(0.4f, -VecDot3(&normals[tris[i].n2], &light_vec));
 
