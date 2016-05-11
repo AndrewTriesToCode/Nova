@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "../../../../Nova/nova_math.h"
+#include "../../../../Nova/nova_render.h"
+
 @interface NovaView : NSView
-// modelview matrix
-// projection matrix
-// screen matrix
-// mesh
+
+@property (nonatomic) struct RenderContext *context;
+
 @end

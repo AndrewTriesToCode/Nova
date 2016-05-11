@@ -9,14 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NOVA - OS X/ViewController.m"
-            timestampString = "484531769.981935"
+            filePath = "../../../Nova/nova_render.c"
+            timestampString = "484621417.400539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "-handleTimer:"
-            landmarkType = "5">
+            startingLineNumber = "378"
+            endingLineNumber = "378"
+            landmarkName = "rgba()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
