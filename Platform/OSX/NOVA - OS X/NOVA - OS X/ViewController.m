@@ -43,7 +43,7 @@ float ang = 0.0f;
     context.proj_mat = &proj_mat;
     context.mv_mat = &pos;
     
-    set_screen_size(&context, 900, 900);
+    set_screen_size(&context, self.novaView.bounds.size.width, self.novaView.bounds.size.height);
     set_hfov(&context, 60.0f);
 
     self.novaView.context = &context;

@@ -13,8 +13,11 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
+    if(self.inLiveResize)
+        return;
+    
     void *src = get_pixel_buffer(self.context);
-    memset(src, 255, 500*4*10);
+    
     CFDataRef data = CFDataCreateWithBytesNoCopy(NULL, src, self.context->screen_width * self.context->screen_height * BYTES_PER_PIXEL, kCFAllocatorNull);
     
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
@@ -29,6 +32,13 @@
     CGImageRelease(image);
     CGColorSpaceRelease(color_space);
     CGDataProviderRelease(provider);
+}
+
+- (void)viewDidEndLiveResize {
+    [super viewDidEndLiveResize];
+    
+    set_screen_size(self.context, self.bounds.size.width, self.bounds.size.height);
+    set_hfov(self.context, 60.0f);
 }
 
 @end

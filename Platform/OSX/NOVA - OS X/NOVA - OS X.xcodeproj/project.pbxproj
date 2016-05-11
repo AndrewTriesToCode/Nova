@@ -49,26 +49,10 @@
 		183126091C5AF10300184929 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1831260B1C5AF10300184929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1831261D1C5AF48500184929 /* Nova.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nova.xcodeproj; path = ../Nova/Nova.xcodeproj; sourceTree = "<group>"; };
-		183126271C5AFB2400184929 /* bunny-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bunny-1500.obj"; sourceTree = "<group>"; };
-		183126281C5AFB2400184929 /* bunny-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bunny-5000.obj"; sourceTree = "<group>"; };
-		183126291C5AFB2400184929 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
-		1831262A1C5AFB2400184929 /* bunny_7k.off */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny_7k.off; sourceTree = "<group>"; };
-		1831262B1C5AFB2400184929 /* cow-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cow-1500.obj"; sourceTree = "<group>"; };
-		1831262C1C5AFB2400184929 /* cow-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cow-5000.obj"; sourceTree = "<group>"; };
-		1831262D1C5AFB2400184929 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
-		1831262E1C5AFB2400184929 /* cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cup.obj; sourceTree = "<group>"; };
-		1831262F1C5AFB2400184929 /* dragon-1500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dragon-1500.obj"; sourceTree = "<group>"; };
-		183126301C5AFB2400184929 /* dragon-5000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dragon-5000.obj"; sourceTree = "<group>"; };
 		183126321C5AFB2400184929 /* f16.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.mtl; sourceTree = "<group>"; };
 		183126331C5AFB2400184929 /* f16.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.obj; sourceTree = "<group>"; };
 		183126341C5AFB2400184929 /* F16s.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = F16s.bmp; sourceTree = "<group>"; };
 		183126351C5AFB2400184929 /* F16t.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = F16t.bmp; sourceTree = "<group>"; };
-		183126361C5AFB2400184929 /* lamp600.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lamp600.obj; sourceTree = "<group>"; };
-		183126371C5AFB2400184929 /* lego.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lego.obj; sourceTree = "<group>"; };
-		183126381C5AFB2400184929 /* quad.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad.obj; sourceTree = "<group>"; };
-		183126391C5AFB2400184929 /* shammy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shammy.obj; sourceTree = "<group>"; };
-		1831263A1C5AFB2400184929 /* snakie.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snakie.obj; sourceTree = "<group>"; };
-		1831263B1C5AFB2400184929 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
 		1846212D1CE1628000AC0E61 /* NovaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NovaView.h; sourceTree = "<group>"; };
 		1846212E1CE1628000AC0E61 /* NovaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NovaView.m; sourceTree = "<group>"; };
 		188824511CE2CA12007FD08A /* test_tri.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_tri.obj; sourceTree = "<group>"; };
@@ -140,23 +124,7 @@
 		183126261C5AFB2400184929 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				183126271C5AFB2400184929 /* bunny-1500.obj */,
-				183126281C5AFB2400184929 /* bunny-5000.obj */,
-				183126291C5AFB2400184929 /* bunny.obj */,
-				1831262A1C5AFB2400184929 /* bunny_7k.off */,
-				1831262B1C5AFB2400184929 /* cow-1500.obj */,
-				1831262C1C5AFB2400184929 /* cow-5000.obj */,
-				1831262D1C5AFB2400184929 /* cube.obj */,
-				1831262E1C5AFB2400184929 /* cup.obj */,
-				1831262F1C5AFB2400184929 /* dragon-1500.obj */,
-				183126301C5AFB2400184929 /* dragon-5000.obj */,
 				183126311C5AFB2400184929 /* f16 */,
-				183126361C5AFB2400184929 /* lamp600.obj */,
-				183126371C5AFB2400184929 /* lego.obj */,
-				183126381C5AFB2400184929 /* quad.obj */,
-				183126391C5AFB2400184929 /* shammy.obj */,
-				1831263A1C5AFB2400184929 /* snakie.obj */,
-				1831263B1C5AFB2400184929 /* teapot.obj */,
 			);
 			name = Models;
 			path = ../../../../Models;
