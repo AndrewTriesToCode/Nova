@@ -14,7 +14,7 @@
     [super drawRect:dirtyRect];
     
     void *src = get_pixel_buffer(self.context);
-    
+    memset(src, 255, 500*4*10);
     CFDataRef data = CFDataCreateWithBytesNoCopy(NULL, src, self.context->screen_width * self.context->screen_height * BYTES_PER_PIXEL, kCFAllocatorNull);
     
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);

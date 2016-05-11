@@ -43,7 +43,7 @@ float ang = 0.0f;
     context.proj_mat = &proj_mat;
     context.mv_mat = &pos;
     
-    set_screen_size(&context, 500, 500);
+    set_screen_size(&context, 900, 900);
     set_hfov(&context, 60.0f);
 
     self.novaView.context = &context;
@@ -65,7 +65,7 @@ float ang = 0.0f;
     
     MatSetRotY(&rot, ang);
     MatSetRotX(&rot2, ang / 2.0f);
-    ang -= 0.002f;
+    ang -= delta;
     MatSetTranslate(&trans, 0.0f, 0.0f, -5.f);
     MatMul(&rot2, &rot, &pos1);
     MatMul(&trans, &pos1, &pos);

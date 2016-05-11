@@ -52,7 +52,7 @@ void set_screen_size(struct RenderContext *context, int width, int height)
 
 	MatSetIdentity(context->screen_mat);
 	context->screen_mat->e[0][0] = width / 2.0f;
-	context->screen_mat->e[1][1] = height / 2.0f;
+	context->screen_mat->e[1][1] = -height / 2.0f;
 	context->screen_mat->e[0][3] = width / 2.0f;
 	context->screen_mat->e[1][3] = height / 2.0f;
 }
@@ -167,7 +167,7 @@ void render_mesh_bary_naive(struct RenderContext *context, const struct Mesh *me
 		v1 = &verts[tris[i].v1];
 		v2 = &verts[tris[i].v2];
 
-		t_area = calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
+		t_area = -calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
 
 		if (t_area > 0)
 		{
@@ -251,7 +251,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 		v1 = &verts[tris[i].v1];
 		v2 = &verts[tris[i].v2];
 
-		t_area = calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
+		t_area = -calc_2xtri_area(&v0->pos, &v1->pos, &v2->pos);
         
 		if (t_area > 0)
 		{
@@ -268,7 +268,7 @@ void render_mesh_bary_step(struct RenderContext *context, const struct Mesh *mes
 			int ymin = max(0, (int)min(min(v0->pos.y, v1->pos.y), v2->pos.y));
 			int ymax = min((int)max(max(v0->pos.y, v1->pos.y), v2->pos.y) + 1, context->screen_height - 1);
 
-			float t_area_inv = 1.0f / t_area;
+			float t_area_inv = 1.0f / -t_area;
 
 			struct Vector p = { (float)xmin, (float)ymin };
             
