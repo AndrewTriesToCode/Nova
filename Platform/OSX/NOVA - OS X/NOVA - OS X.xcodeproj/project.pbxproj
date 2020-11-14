@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181CE8202517CCC500702E07 /* libNova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 181CE81F2517CCB600702E07 /* libNova.a */; };
 		183125FF1C5AF10300184929 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 183125FE1C5AF10300184929 /* AppDelegate.m */; };
 		183126021C5AF10300184929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 183126011C5AF10300184929 /* main.m */; };
 		183126051C5AF10300184929 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183126041C5AF10300184929 /* ViewController.m */; };
 		183126071C5AF10300184929 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 183126061C5AF10300184929 /* Assets.xcassets */; };
 		1831260A1C5AF10300184929 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183126081C5AF10300184929 /* Main.storyboard */; };
-		183126251C5AF67B00184929 /* libNova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 183126221C5AF48500184929 /* libNova.a */; };
 		183126471C5AFB2400184929 /* f16.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 183126321C5AFB2400184929 /* f16.mtl */; };
 		183126481C5AFB2400184929 /* f16.obj in Resources */ = {isa = PBXBuildFile; fileRef = 183126331C5AFB2400184929 /* f16.obj */; };
 		183126491C5AFB2400184929 /* F16s.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 183126341C5AFB2400184929 /* F16s.bmp */; };
@@ -22,23 +22,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		183126211C5AF48500184929 /* PBXContainerItemProxy */ = {
+		181CE81E2517CCB600702E07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
+			containerPortal = 181CE81A2517CCB600702E07 /* Nova.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 183125D81C5AEBD600184929;
-			remoteInfo = Nova;
-		};
-		183126231C5AF4C400184929 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 183125D71C5AEBD600184929;
 			remoteInfo = Nova;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		181CE81A2517CCB600702E07 /* Nova.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nova.xcodeproj; path = ../Nova/Nova.xcodeproj; sourceTree = "<group>"; };
 		183125FA1C5AF10300184929 /* NOVA - OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NOVA - OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		183125FD1C5AF10300184929 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		183125FE1C5AF10300184929 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -48,7 +42,6 @@
 		183126061C5AF10300184929 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		183126091C5AF10300184929 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1831260B1C5AF10300184929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1831261D1C5AF48500184929 /* Nova.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nova.xcodeproj; path = ../Nova/Nova.xcodeproj; sourceTree = "<group>"; };
 		183126321C5AFB2400184929 /* f16.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.mtl; sourceTree = "<group>"; };
 		183126331C5AFB2400184929 /* f16.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f16.obj; sourceTree = "<group>"; };
 		183126341C5AFB2400184929 /* F16s.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = F16s.bmp; sourceTree = "<group>"; };
@@ -63,19 +56,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				183126251C5AF67B00184929 /* libNova.a in Frameworks */,
+				181CE8202517CCC500702E07 /* libNova.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181CE8192517CCB500702E07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				181CE81A2517CCB600702E07 /* Nova.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		181CE81B2517CCB600702E07 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				181CE81F2517CCB600702E07 /* libNova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		183125F11C5AF10300184929 = {
 			isa = PBXGroup;
 			children = (
 				183125FC1C5AF10300184929 /* NOVA - OS X */,
 				183125FB1C5AF10300184929 /* Products */,
-				1831261D1C5AF48500184929 /* Nova.xcodeproj */,
+				181CE8192517CCB500702E07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,14 +122,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1831261E1C5AF48500184929 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				183126221C5AF48500184929 /* libNova.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		183126261C5AFB2400184929 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +157,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				183126241C5AF4C400184929 /* PBXTargetDependency */,
 			);
 			name = "NOVA - OS X";
 			productName = "NOVA - OS X";
@@ -169,7 +169,7 @@
 		183125F21C5AF10300184929 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Andrew White";
 				TargetAttributes = {
 					183125F91C5AF10300184929 = {
@@ -179,7 +179,7 @@
 			};
 			buildConfigurationList = 183125F51C5AF10300184929 /* Build configuration list for PBXProject "NOVA - OS X" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -190,8 +190,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 1831261E1C5AF48500184929 /* Products */;
-					ProjectRef = 1831261D1C5AF48500184929 /* Nova.xcodeproj */;
+					ProductGroup = 181CE81B2517CCB600702E07 /* Products */;
+					ProjectRef = 181CE81A2517CCB600702E07 /* Nova.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -202,11 +202,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		183126221C5AF48500184929 /* libNova.a */ = {
+		181CE81F2517CCB600702E07 /* libNova.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libNova.a;
-			remoteRef = 183126211C5AF48500184929 /* PBXContainerItemProxy */;
+			remoteRef = 181CE81E2517CCB600702E07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -242,14 +242,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		183126241C5AF4C400184929 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Nova;
-			targetProxy = 183126231C5AF4C400184929 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		183126081C5AF10300184929 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -266,17 +258,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -309,17 +313,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -345,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "NOVA - OS X/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -357,6 +374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "NOVA - OS X/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

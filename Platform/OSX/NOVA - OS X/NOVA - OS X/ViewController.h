@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "../../../../Nova/nova_math.h"
+#include "../../../../Nova/nova_render.h"
+
 @interface ViewController : NSViewController
-
-
 @end
 
